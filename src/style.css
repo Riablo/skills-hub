@@ -1,11 +1,41 @@
 @import "tailwindcss";
 
+/* The design's tokens, each with its dark counterpart. */
+@theme {
+  --color-ground: light-dark(#f6f6f9, #17171c);
+  --color-side: light-dark(#ececf2, #1d1d24);
+  --color-card: light-dark(#ffffff, #22222a);
+  --color-hover: light-dark(#f7f7fb, #282831);
+  --color-fill: light-dark(#e6e6ee, #2e2e39);
+  --color-line: light-dark(#e2e2ea, #33333f);
+  --color-line-strong: light-dark(#d5d5df, #43434f);
+  --color-line-soft: light-dark(#eeeef3, #2b2b34);
+  --color-ink: light-dark(#1c1c28, #ededf2);
+  --color-ink-2: light-dark(#3f3f4c, #c6c6d2);
+  --color-muted: light-dark(#62626f, #9c9caa);
+  --color-accent: light-dark(#4f46e5, #6058ec);
+  --color-accent-soft: light-dark(#f1f0fe, #2a2850);
+  --color-manual: light-dark(#8e1a4f, #f5b5d2);
+  --color-manual-bg: light-dark(#fbe8f1, #4a1d33);
+  --color-auto: light-dark(#3d4a5f, #b6c0d0);
+  --color-auto-bg: light-dark(#eef1f6, #2b303b);
+  --color-local: light-dark(#4a3aa8, #c3bbf5);
+  --color-local-bg: light-dark(#eeebfb, #2e2a52);
+  --color-warn: light-dark(#7c4a03, #f2cc7a);
+  --color-warn-bg: light-dark(#fff8e6, #3a2e12);
+  --color-warn-line: light-dark(#f0d9a8, #5c4718);
+  --color-warn-dot: light-dark(#d97706, #f0a63a);
+  --color-ok: light-dark(#15803d, #5bcb85);
+  --color-danger: light-dark(#b42318, #f0806f);
+  --color-danger-bg: light-dark(#fdecea, #45201c);
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
 :root {
   color-scheme: light dark;
-  /* Matches BackgroundColor of the window in main.go. */
-  --bg: light-dark(#ffffff, #17181c);
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
   font-size: 13px;
+  line-height: 1.4;
 }
 
 html,
@@ -16,7 +46,9 @@ body,
 
 body {
   margin: 0;
-  background: var(--bg);
+  /* Matches BackgroundColor of the window in main.go. */
+  background: var(--color-ground);
+  color: var(--color-ink);
   /* An app, not a document: text is selected only where it is worth copying. */
   user-select: none;
   -webkit-user-select: none;
@@ -31,23 +63,86 @@ textarea,
   -webkit-user-select: text;
 }
 
+/* Drawn here rather than by the system, which greys checkboxes out in
+   windows that are not frontmost. */
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 1.5px solid var(--color-line-strong);
+  border-radius: 4.5px;
+  background: var(--color-card) center / 11px no-repeat;
+}
+
+input[type="checkbox"]:checked,
+input[type="checkbox"]:indeterminate {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+}
+
+input[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.3l2.3 2.3 4.700-5'/%3E%3C/svg%3E");
+}
+
+input[type="checkbox"]:indeterminate {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 6h6'/%3E%3C/svg%3E");
+}
+
+input[type="checkbox"]:disabled {
+  opacity: 0.4;
+}
+
+input[type="checkbox"]:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 40%, transparent);
+  outline-offset: 1px;
+}
+
 @layer components {
   .btn {
-    @apply inline-flex h-7 shrink-0 items-center gap-1 rounded-md border border-zinc-300 bg-white px-2.5 text-[13px] whitespace-nowrap text-zinc-800 hover:bg-zinc-50 active:bg-zinc-100 disabled:opacity-40 disabled:hover:bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 dark:disabled:hover:bg-zinc-800;
+    @apply border-line-strong bg-card text-ink hover:bg-hover inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-lg border px-3 text-[13px] whitespace-nowrap disabled:opacity-40;
+  }
+  .btn-sm {
+    @apply h-7 rounded-[7px] px-2.5;
   }
   .btn-primary {
-    @apply border-blue-600 bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700 disabled:hover:bg-blue-600 dark:border-blue-500 dark:bg-blue-600 dark:hover:bg-blue-500;
+    @apply bg-accent hover:bg-accent border-transparent font-semibold text-white hover:brightness-110;
   }
-  .btn-danger {
-    @apply text-red-600 dark:text-red-400;
+  .btn-warn {
+    @apply border-warn-line bg-warn-bg text-warn hover:bg-warn-bg font-medium hover:brightness-[0.98];
   }
   .btn-ghost {
-    @apply border-transparent bg-transparent hover:bg-zinc-200/70 dark:border-transparent dark:bg-transparent dark:hover:bg-zinc-700/70;
+    @apply text-ink-2 hover:bg-fill border-transparent bg-transparent px-2.5;
+  }
+  .btn-danger {
+    @apply text-danger;
+  }
+  /* A square button holding one icon. */
+  .icon-btn {
+    @apply text-ink-2 hover:bg-fill inline-flex size-7 shrink-0 items-center justify-center rounded-[7px] disabled:opacity-40;
   }
   .input {
-    @apply h-7 w-full rounded-md border border-zinc-300 bg-white px-2 text-[13px] outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-900;
+    @apply border-line-strong bg-card focus:border-accent focus:ring-accent/20 h-8 w-full rounded-lg border px-2.5 text-[13px] outline-none focus:ring-2;
   }
-  .badge {
-    @apply inline-flex h-[18px] shrink-0 items-center rounded px-1.5 text-[11px] whitespace-nowrap;
+  .card {
+    @apply border-line bg-card rounded-xl border;
+  }
+  .chip {
+    @apply inline-flex h-5 shrink-0 items-center gap-1 rounded-md px-1.5 text-[12px] font-medium whitespace-nowrap;
+  }
+  .pill {
+    @apply border-line text-ink-2 inline-flex h-[22px] shrink-0 items-center gap-1 rounded-full border pr-2 pl-1.5 text-[12px] whitespace-nowrap;
+  }
+  .seg {
+    @apply bg-fill inline-flex shrink-0 gap-0.5 rounded-lg p-0.5;
+  }
+  .seg > button {
+    @apply text-ink-2 inline-flex h-7 items-center gap-1.5 rounded-md px-3 whitespace-nowrap disabled:opacity-40;
+  }
+  .seg > button[aria-pressed="true"] {
+    @apply bg-card text-ink font-semibold shadow-[0_1px_2px_rgb(28_28_40/0.12)];
+  }
+  .label {
+    @apply text-muted text-[12px];
   }
 }
