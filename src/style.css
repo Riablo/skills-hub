@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light dark;
+  /* Matches BackgroundColor of the window in main.go. */
+  --bg: light-dark(#ffffff, #17181c);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+  font-size: 13px;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  /* An app, not a document: text is selected only where it is worth copying. */
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+  overflow: hidden;
+}
+
+input,
+textarea,
+.selectable {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex h-7 shrink-0 items-center gap-1 rounded-md border border-zinc-300 bg-white px-2.5 text-[13px] whitespace-nowrap text-zinc-800 hover:bg-zinc-50 active:bg-zinc-100 disabled:opacity-40 disabled:hover:bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 dark:disabled:hover:bg-zinc-800;
+  }
+  .btn-primary {
+    @apply border-blue-600 bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700 disabled:hover:bg-blue-600 dark:border-blue-500 dark:bg-blue-600 dark:hover:bg-blue-500;
+  }
+  .btn-danger {
+    @apply text-red-600 dark:text-red-400;
+  }
+  .btn-ghost {
+    @apply border-transparent bg-transparent hover:bg-zinc-200/70 dark:border-transparent dark:bg-transparent dark:hover:bg-zinc-700/70;
+  }
+  .input {
+    @apply h-7 w-full rounded-md border border-zinc-300 bg-white px-2 text-[13px] outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-900;
+  }
+  .badge {
+    @apply inline-flex h-[18px] shrink-0 items-center rounded px-1.5 text-[11px] whitespace-nowrap;
+  }
+}
