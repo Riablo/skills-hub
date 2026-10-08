@@ -31,7 +31,19 @@
 | --- | --- |
 | ![远程项目](docs/remote.png) | ![按触发方式筛选](docs/trigger.png) |
 
-## 运行
+## 下载
+
+从 [Releases](https://github.com/Riablo/skills-hub/releases/latest) 下载 `.dmg`，打开后把 Skills Hub 拖进「应用程序」。支持 macOS 12 及以上，Apple 芯片和 Intel 通用。
+
+这个 app 没有经过 Apple 公证，第一次打开会被系统拦下。在终端执行一次下面的命令就能正常打开：
+
+```sh
+xattr -cr "/Applications/Skills Hub.app"
+```
+
+安装技能要用到 `npx`，需要先装好 Node.js；管理远程主机需要能用 `ssh` 免密登录。
+
+## 从源码运行
 
 ```sh
 bun install
