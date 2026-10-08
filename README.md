@@ -1,8 +1,35 @@
-# Skills Hub
+<p align="center">
+  <img src="resources/icon.png" width="128" alt="">
+</p>
 
-在一个地方管理所有 Agent Skills：装进仓库，再分发到全局或各个项目（本机或 SSH 主机）。
+<h1 align="center">Skills Hub</h1>
 
-Inspired by [Kitter](https://github.com/what1f/kitter). Built with [MyGo](https://github.com/egoist/mygo)（Go + React）。
+<p align="center">
+  在一个地方管理所有 Agent Skills：装进仓库，再分发到全局或各个项目，本机或 SSH 主机都行。
+</p>
+
+<p align="center">
+  Inspired by <a href="https://github.com/what1f/kitter">Kitter</a> · Built with <a href="https://github.com/egoist/mygo">MyGo</a>（Go + React）
+</p>
+
+![全部技能](docs/skills.png)
+
+## 功能
+
+- **一个仓库装下所有技能**：粘贴 skills.sh 上的 `npx skills add` 命令即可安装，也能关联自己写技能的本地文件夹。
+- **分发到任何地方**：全局用软链接，改了立即生效；项目用复制，可以提交到 Git。同时兼容 `.agents/skills` 和 `.claude/skills`。
+- **远程主机**：通过 SSH 管理其他机器上的全局目录和项目。
+- **分组**：按来源仓库自动分组，也可以自己命名，整组安装、更新、删除。
+- **手动 / 自动触发**：识别 Claude Code 和 Codex 各自的设置，可以固定成你想要的，技能更新后依然保持。
+- **状态一目了然**：每个项目里哪些已同步、哪些落后于仓库、哪些不是从这里装的，落后的一键同步。
+
+| 分发到全局和项目 | 项目里装了什么 |
+| --- | --- |
+| ![安装到](docs/install.png) | ![项目页](docs/project.png) |
+
+| 远程主机上的项目 | 只看手动触发的技能 |
+| --- | --- |
+| ![远程项目](docs/remote.png) | ![按触发方式筛选](docs/trigger.png) |
 
 ## 运行
 
